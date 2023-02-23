@@ -68,7 +68,6 @@ if (!isset($_SESSION['ID'])) {
                             select_roomtype();
                      ?>
                 </select>
-
             </div>
             <div class="row_container">
                 <div class="input_wrapper">
@@ -106,7 +105,7 @@ if (!isset($_SESSION['ID'])) {
                 </div>
                 <div class="input_wrapper">
                     <label for="">Payment</label>
-                    <input type="text" class="validation2" id="payment" required>
+                    <input type="number" class="validation2" id="payment" required>
                 </div>
             </div>
             <div class="row_container">

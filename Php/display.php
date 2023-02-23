@@ -154,11 +154,6 @@ function display_checkout()
             echo '<td>  ' . $row['checkin'] . '</td>';
             echo '<td id="checkout-' . $row['id'] . '"> ' . $row['checkout'] . '</td>';
             echo '<td id="stats-' . $row['id'] . '">' . $row['Stats'] . ' </td>';
-            // echo '<input type="hidden" id="amount-'.$row['id'].'"  value = "'.$row['Amount'].'">';
-            // echo '<input type="hidden" id="payment-'.$row['id'].'"  value = "'.$row['Payments'].'">';
-            // echo '<input type="hidden" id="balance-'.$row['id'].'"  value = "'.$row['Balance'].'">';
-            // echo '<input type="hidden" id="price-'.$row['id'].'"  value = "'.$row['RoomPrice'].'">';
-            // echo '<input type="hidden" id="roomnumber-'.$row['id'].'" value = "'.$row['roomid'].'">';
             echo '</tr>';
         }
     }
@@ -285,65 +280,39 @@ function display_records()
 
 
 
-// if(isset ($_POST ['search'])){
-//     global $db;
+if(isset ($_POST ['search'])){
+    global $db;
 
-//     $search = $_POST['search'];
-//         $query = "SELECT a.Costumer_name,
-//         b.Guest,
-//         b.Amount,
-//         b.Payments,
-//         b.Balance,
-//         d.roomNumber,
-//         e.RoomType,
-//         e.RoomPrice,
-//         e.Package
-//         FROM users as a
-//         RIGHT JOIN trans as b
-//         ON a.id = b.users_id
-//         RIGHT JOIN usertrans as c
-//         ON b.id = c.trans_id
-//         LEFT JOIN rooms as d
-//         ON c.room_id = d.id
-//         LEFT JOIN rtype as e
-//         ON d.roomtype_id = e.id WHERE a.costumer_name LIKE '{$search}%' LIMIT 5";
-//         $search_costumer = mysqli_query($db,$query);
-    
-//         if(mysqli_num_rows($search_costumer) > 0){
-//             foreach($search_costumer as $costumers){
-//                 $fillter = $costumers;
-//             }   
-    
-//         }else{
-            
-//         }
+    $search = $_POST['search'];
 
-//         $query2 = "SELECT a.Costumer_name,
-//         b.Guest,
-//         b.Amount,
-//         b.Payments,
-//         b.Balance,
-//         d.roomNumber,
-//         e.RoomType,
-//         e.RoomPrice,
-//         e.Package
-//         FROM users as a
-//         RIGHT JOIN trans as b
-//         ON a.id = b.users_id
-//         RIGHT JOIN usertrans as c
-//         ON b.id = c.trans_id
-//         LEFT JOIN rooms as d
-//         ON c.room_id = d.id
-//         LEFT JOIN rtype as e
-//         ON d.roomtype_id = e.id";
-//         $search_costumer2 = mysqli_query($db,$query2);
-//            if($search_costumer2){
-//             foreach($search_costumer2 as $costumers2){
-//                 $all = $costumers2;
-//             }   
-            
-//         }
+    $json = array();
+        $query = "SELECT a.Costumer_name,
+        b.Guest,
+        b.Amount,
+        b.Payments,
+        b.Balance,
+        d.roomNumber,
+        e.RoomType,
+        e.RoomPrice,
+        e.Package
+        FROM users as a
+        RIGHT JOIN trans as b
+        ON a.id = b.users_id
+        RIGHT JOIN usertrans as c
+        ON b.id = c.trans_id
+        LEFT JOIN rooms as d
+        ON c.room_id = d.id
+        LEFT JOIN rtype as e
+        ON d.roomtype_id = e.id WHERE a.costumer_name LIKE '{$search}%' LIMIT 5";
+        $search_costumer = mysqli_query($db,$query);
     
-//     $json = [$fillter, $all ];
-//     echo json_encode($json);   
-// }
+        if(mysqli_num_rows($search_costumer) > 0){
+            foreach($search_costumer as $costumers){
+                array_push($json, $costumers);
+            }   
+            echo json_encode($json);   
+        }
+
+ 
+       
+}

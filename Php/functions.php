@@ -11,13 +11,13 @@ if (isset($_POST['Addrooms'])) {
 if (isset($_POST['costumer'])) {
     if ($_POST['costumer'] == 'add_costumer') {
         insert_transaction();
-    } 
+    }
 }
 
-if(isset($_POST['checkout_action'])){
-    if($_POST['checkout_action'] == 'update_guest'){
+if (isset($_POST['checkout_action'])) {
+    if ($_POST['checkout_action'] == 'update_guest') {
         update_date();
-    }else if($_POST['checkout_action'] == 'checkout_guest'){
+    } else if ($_POST['checkout_action'] == 'checkout_guest') {
         update_status();
     }
 }
@@ -25,23 +25,22 @@ if(isset($_POST['checkout_action'])){
 if (isset($_POST['editroom_action'])) {
     if ($_POST['editroom_action'] == 'Editroomtype') {
         Update_roomtype();
-    }else if($_POST['editroom_action'] == 'Deleteroomtype'){
+    } else if ($_POST['editroom_action'] == 'Deleteroomtype') {
         remove_roomtype();
     }
 }
 
-if(isset($_POST['room_action'])){
-    if($_POST['room_action'] == 'Update_room'){
+if (isset($_POST['room_action'])) {
+    if ($_POST['room_action'] == 'Update_room') {
         update_rooms();
-    }else if($_POST['room_action']== 'Delete_room'){
+    } else if ($_POST['room_action'] == 'Delete_room') {
         delete_room();
     }
 }
 
-if(isset($_POST['payment_action'])){
-    if($_POST['payment_action'] == 'update_transaction'){
+if (isset($_POST['payment_action'])) {
+    if ($_POST['payment_action'] == 'update_transaction') {
         update_payment();
-
     }
 }
 function e($data)
@@ -60,15 +59,14 @@ function insert_roomtype()
     $room_price = e($_POST['roomprice']);
     $room_capacity = e($_POST['roomcapacity']);
 
-  
-        $query = "INSERT INTO rtype (RoomType,RoomDescription,RoomPrice,RoomCapacity,Package) VALUES('$room_type','$room_description','$room_price','$room_capacity','$room_package')";
-        $res = mysqli_query($db, $query);
-        if ($res) {
-            header('location:../Room_type.php');
-        } else {
-            echo ' Not Inserted';
-        }
-    
+
+    $query = "INSERT INTO rtype (RoomType,RoomDescription,RoomPrice,RoomCapacity,Package) VALUES('$room_type','$room_description','$room_price','$room_capacity','$room_package')";
+    $res = mysqli_query($db, $query);
+    if ($res) {
+        header('location:../Room_type.php');
+    } else {
+        echo ' Not Inserted';
+    }
 }
 
 // UPDATING ROOM TYPE
@@ -83,8 +81,10 @@ function Update_roomtype()
     $update_roomcapacity = $_POST['update_roomcapacity'];
     $update_roompackage = $_POST['update_roompackage'];
 
-    if (empty($update_roomtype) || empty($update_roomdescription) || empty($update_roomprice) ||
-        empty($update_roomcapacity) || empty($update_roompackage) ) {
+    if (
+        empty($update_roomtype) || empty($update_roomdescription) || empty($update_roomprice) ||
+        empty($update_roomcapacity) || empty($update_roompackage)
+    ) {
         echo 'empty';
     } else {
         $sql_count = "SELECT count(roomtype_id) as update_roomtype FROM rooms WHERE Stats = 'Occupied' AND roomtype_id = '$id'";
@@ -106,27 +106,29 @@ function Update_roomtype()
 }
 
 // REOMEVE ROOM TYPE
-function remove_roomtype(){
+function remove_roomtype()
+{
     global $db;
     $id = $_POST['remove_id'];
 
     $sql_count = "SELECT count(roomtype_id) as roomtype FROM rooms WHERE Stats = 'Occupied' AND roomtype_id = '$id'";
-        $count_id = mysqli_query($db, $sql_count);
-            $count = mysqli_fetch_assoc($count_id);
-            if($count['roomtype'] > 0){
-                echo 'cannot delete';
-            }else {
-                $sql_delete = "DELETE FROM rooms WHERE roomtype_id = '$id'";
-                    $query_delete = mysqli_query($db,$sql_delete);
-                    if($query_delete){
-                        $sql_deleterooomtype ="DELETE FROM rtype WHERE id = '$id'";
-                            $query_deleterooomtype = mysqli_query($db,$sql_deleterooomtype);
-                            if($query_deleterooomtype){
-                                echo 'deleted';
-                            }
-                    }
+    $count_id = mysqli_query($db, $sql_count);
+    $count = mysqli_fetch_assoc($count_id);
+    if ($count['roomtype'] > 0) {
+        echo 'cannot delete';
+    } else {
+        $sql_delete = "DELETE FROM rooms WHERE roomtype_id = '$id'";
+        $query_delete = mysqli_query($db, $sql_delete);
+        if ($query_delete) {
+            $sql_deleterooomtype = "DELETE FROM rtype WHERE id = '$id'";
+            $query_deleterooomtype = mysqli_query($db, $sql_deleterooomtype);
+            if ($query_deleterooomtype) {
+                echo 'deleted';
             }
+        }
+    }
 }
+
 //ADDING ROOMS 
 function insert_room()
 {
@@ -147,55 +149,57 @@ function insert_room()
 }
 
 // UPDATE ROOMS
-function update_rooms(){
+function update_rooms()
+{
     global $db;
-    
+
     $id = $_POST['id'];
     $update_roomnumber = $_POST['update_roomnumber'];
     $update_roomtype = $_POST['update_roomtype'];
     $update_status = $_POST['update_status'];
 
     $sql_select = "SELECT Stats FROM rooms WHERE id = '$id'";
-    $query_select = mysqli_query($db,$sql_select);
-    if($query_select){
-        foreach($query_select as $row){
-            if($row['Stats'] == 'Occupied'){
+    $query_select = mysqli_query($db, $sql_select);
+    if ($query_select) {
+        foreach ($query_select as $row) {
+            if ($row['Stats'] == 'Occupied') {
                 echo 'used';
-            }else{
+            } else {
                 $sql_update = "UPDATE rooms SET roomtype_id = '$update_roomtype', RoomNumber ='$update_roomnumber', Stats = '$update_status' WHERE id = '$id'";
-                $query_update = mysqli_query($db,$sql_update);
-                if($query_update){
+                $query_update = mysqli_query($db, $sql_update);
+                if ($query_update) {
                     echo 'successs';
                 }
             }
         }
     }
-}   
+}
 
 // DELETE ROOMS
-function delete_room(){
+function delete_room()
+{
     global $db;
     $id = $_POST['remove_id'];
 
     $sql_select = "SELECT Stats FROM rooms WHERE id = '$id'";
-    $query_select = mysqli_query($db,$sql_select);
-    if($query_select){
-        foreach($query_select as $row){
-            if($row['Stats'] == 'Occupied'){
+    $query_select = mysqli_query($db, $sql_select);
+    if ($query_select) {
+        foreach ($query_select as $row) {
+            if ($row['Stats'] == 'Occupied') {
                 echo 'used';
-            }else{
+            } else {
                 $sql_delete = "DELETE FROM usertrans WHERE room_id = '$id'";
-        $query_delete = mysqli_query($db,$sql_delete);
-        if($query_delete){
-            $sql_deleteroom = "DELETE FROM rooms WHERE id = '$id'";
-            $query_deleteroom = mysqli_query($db ,$sql_deleteroom);
-            if($query_delete){
-                echo 'deleted'; 
+                $query_delete = mysqli_query($db, $sql_delete);
+                if ($query_delete) {
+                    $sql_deleteroom = "DELETE FROM rooms WHERE id = '$id'";
+                    $query_deleteroom = mysqli_query($db, $sql_deleteroom);
+                    if ($query_delete) {
+                        echo 'deleted';
+                    }
+                }
             }
         }
-            }
-        }
-    }   
+    }
 }
 
 // ADDING TRANSACTIONS
@@ -235,21 +239,23 @@ function insert_transaction()
     }
 }
 
-    function update_payment(){
-        global $db;
+// UPDATE PAYMENT
+function update_payment()
+{
+    global $db;
 
-        $id = $_POST['id'];
-        $payment = $_POST['payment'];
-        $balance = $_POST['balance'];
+    $id = $_POST['id'];
+    $payment = $_POST['payment'];
+    $balance = $_POST['balance'];
 
-        $sql_update = "UPDATE trans SET Payments = '$payment' , Balance = '$balance' WHERE id = '$id'";
-        $query_update = mysqli_query($db,$sql_update);
-        if($query_update){
-            echo 'updated';
-        }else{
-            echo 'not updated';
-        }
+    $sql_update = "UPDATE trans SET Payments = '$payment' , Balance = '$balance' WHERE id = '$id'";
+    $query_update = mysqli_query($db, $sql_update);
+    if ($query_update) {
+        echo 'updated';
+    } else {
+        echo 'not updated';
     }
+}
 
 
 // UPDATE extend DATE
@@ -261,42 +267,41 @@ function update_date()
     $update_balance = $_POST['update_balance'];
     $update_checkout = $_POST['update_checkout'];
     $update_amount = $_POST['update_amount'];
-   
+
     $sql_update = "UPDATE trans SET Balance = '$update_balance', checkout = '$update_checkout', Amount = '$update_amount' WHERE id = '$id'";
-        $query_update = mysqli_query($db,$sql_update);
-            if($query_update){
-                echo 'updated';
-            }else{
-                echo 'not update';
-            }
+    $query_update = mysqli_query($db, $sql_update);
+    if ($query_update) {
+        echo 'updated';
+    } else {
+        echo 'not update';
+    }
 }
-function update_status(){
+
+// UPDATE STATUS (CHECKOUT)
+function update_status()
+{
     global $db;
     $checkout_id = $_POST['checkout_id'];
-    $today = $_POST ['today'];
+    $today = $_POST['today'];
     $roomnumber_id = $_POST['roomnumber_id'];
 
     $sql_select = "SELECT Balance FROM trans WHERE id = '$checkout_id'";
-        $query_select = mysqli_query($db, $sql_select);
-            if($query_select){
-                foreach ($query_select as $row){
-                    if($row['Balance'] == 0 ){
-                        $sql_update = "UPDATE trans SET Stats = 'Un Occupied', checkout = '$today' WHERE id = '$checkout_id'";
-                        $query_update = mysqli_query($db,$sql_update);
-                        if($query_update){
-                            $sql_updateroom = "UPDATE rooms SET Stats = 'Available' WHERE id = '$roomnumber_id'";
-                                $query_updateroom = mysqli_query($db,$sql_updateroom);
-                            if($query_updateroom){
-                                echo 'status Updated';
-                            }
-                        }
-                    }else{
-                        echo 'Remaining balance';
-                      
+    $query_select = mysqli_query($db, $sql_select);
+    if ($query_select) {
+        foreach ($query_select as $row) {
+            if ($row['Balance'] == 0) {
+                $sql_update = "UPDATE trans SET Stats = 'Un Occupied', checkout = '$today' WHERE id = '$checkout_id'";
+                $query_update = mysqli_query($db, $sql_update);
+                if ($query_update) {
+                    $sql_updateroom = "UPDATE rooms SET Stats = 'Available' WHERE id = '$roomnumber_id'";
+                    $query_updateroom = mysqli_query($db, $sql_updateroom);
+                    if ($query_updateroom) {
+                        echo 'status Updated';
                     }
                 }
+            } else {
+                echo 'Remaining balance';
             }
-
-    
-
-}       
+        }
+    }
+}

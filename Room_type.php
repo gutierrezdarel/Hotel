@@ -103,11 +103,11 @@ if (!isset($_SESSION['ID'])) {
             </div>
             <div class="input_wrapper">
                 <label for="">Room Price</label>
-                <input type="text" id="update_roomprice"  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="6" required>
+                <input  id="update_roomprice"  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="6" required>
             </div>
             <div class="input_wrapper">
                 <label for="">Room Capacity</label>
-                <input type="text" id="update_roomcapacity" required>
+                <input type="number" id="update_roomcapacity" required>
             </div>
             <div class="input_wrapper">
                 <label for="">Room Package</label>

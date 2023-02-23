@@ -10,15 +10,9 @@ if (!isset($_SESSION['ID'])) {
 ?>
 
 <div class="content">
-    <!-- <div class="home_container"> -->
     <div class="home_title">
-        <!-- <div class="header"> -->
-        <!-- <div class="trans_header"> -->
-            <h1>Transactions</h1>
-            <!-- <div class="input_wrapper"> -->
-            <input type="text" id="fillter_costumer" placeholder="Search...." autocomplete="off">
-            <!-- </div> -->
-        <!-- </div> -->
+        <h1>Transactions</h1>
+        <input type="text" id="fillter_costumer" placeholder="Search...." autocomplete="off">
     </div>
     <div class="home_table">
         <div class="table">
@@ -36,15 +30,15 @@ if (!isset($_SESSION['ID'])) {
                         <th>Balance</th>
                         <th>Update payment</th>
                     </tr>
-                    <div class="err"> 
+                    <div class="err">
                         <p class="mes"> </p>
                     </div>
                 </thead>
-          
+
                 <tbody>
-                <?php
-                display_transaction();
-                ?>
+                    <?php
+                    display_transaction();
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -61,7 +55,7 @@ if (!isset($_SESSION['ID'])) {
             <div class="row_container">
                 <div class="input_wrapper">
                     <label for="">Payment</label>
-                    <input type="number" class="validation2" id="update_payment-trans" required >
+                    <input type="number" class="validation2" id="update_payment-trans" required>
                 </div>
                 <!-- <div class="input_wrapper">
                     <label for="">Guest</label> 
