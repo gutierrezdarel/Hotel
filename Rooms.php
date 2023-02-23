@@ -29,7 +29,7 @@ if (!isset($_SESSION['ID'])) {
                 <?php
                 display_room();
                 ?>
-                </tbody>
+                </tbody>   
             </table>
         </div>
         <div class="add_button" id="add_room">
