@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wght@8..144,100;8..144,300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    height: 100vh;
+    width: 100%;
+}
+
+.sidebar {
+    height: calc(100% - 60px);
+    /* width: ; */
+    position: fixed;
+    width: 20rem;
+    background: rgb(9, 72, 109);
+    bottom: 0;
+}
+
+.title {
+    padding-top: 20px;
+    color: white;
+    /* padding-left: 20px; */
+    text-align: center;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 13px 33px;
+    color: white;
+    position: relative;
+    font-size: 1.2rem;
+    list-style: none;
+    text-decoration: none;
+    margin: 20px 30px;
+    /* text-align: center; */
+    border-bottom: 1px solid #77b8ec;
+    width: 200px;
+    margin-left: 25px;
+}
+
+.sidebar ul li a .icon {
+    color: #dee4ec;
+    width: 30px;
+    display: inline-block;
+}
+
+.sidebar ul li a :hover,
+.sidebar ul li a .nav-link {
+    color: #0c7db1;
+    background: white;
+    border-right: 2px solid rgb(5, 68, 104);
+}
+
+.header {
+    width: 100%;
+    position: fixed;
+    right: 0;
+    background-color: rgb(9, 72, 109);
+    height: 60px;
+}
+
+.header_container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: space-between;
+    padding: 0 40px;
+    color: white;
+
+}
+
+.header_logout {
+    width: 200px;
+    gap: 46px;
+    display: flex;
+    color: white;
+}
+
+.header_logout button {
+    padding: 7px 10px;
+}
+
+.icon {
+    height: 10px;
+}
+
+.content {
+    height: calc(100% - 60px);
+    position: fixed;
+    bottom: 0;
+    width: calc(100% - 20rem);
+    right: 0;
+}
+
+.home_title {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* background-color: aliceblue; */
+}
+
+.home_title h1 {
+   
+    padding-left: 50px; 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: rgb(5, 68, 104);
+    font-family: 'Roboto Serif', serif;
+}
+.home_title input{
+    margin-right: 50px; 
+}
+.home_table {
+    width: 100%;
+    height: 100%;
+
+}
+
+.table {
+    height: 100%;
+    overflow: auto;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+}
+
+.table table,
+th,
+td {
+    border: 1px solid #0c7db1;
+    border-collapse: collapse;
+    width: 72rem;
+    text-align: center;
+    height: 51px;
+}
+
+.add_button {
+    position: absolute;
+    bottom: 60px ;
+    right: 70px;
+}
+.add_button button{
+    padding: 10px 15px;
+    border-radius: 50%;
+    font-size: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid white;
+}
+.add_button1 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 79%;
+    left: 90%;
+  
+}
+
+.add_button1 button{
+    padding: 10px 15px;
+    border-radius: 50%;
+    font-size: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid white;
+}
+.edit_icon{
+    height: 2rem;
+    width: 2rem;
+    border-radius: 5px;
+    border: transparent;
+    color: white;
+    background-color: #227725;
+}
+.delete_icon{
+    height: 2rem;
+    width: 2rem;
+    border-radius: 5px;
+    border: transparent;
+    color: white;
+    background-color: #da1017;
+}
+.trans_header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 70px;
+    padding-top: 20px;
+    height: 100%;
+}
+#fillter_costumer{
+    
+    width: 15em;
+    height: 2rem;
+    border: 0px;
+    background: transparent;
+    border-bottom: 2px solid rgb(9, 72, 109)
+
+}
+.button_container{
+    display: flex;
+    justify-content: center;
+    width: 18rem;
+    height: 100%;
+    align-items: center;
+}
+.button_wrapper button{
+    padding: 10px 15px;
+    font-size: 13px;
+    
+}
+
+#checkout-table {
+    display: none;
+}
+
+#checkout-table.show{
+    display: flex;
+}
+
+#checkin-table {
+    display: none;
+}
+
+#checkin-table.show{
+    display: flex;
+}
+
+.checkin-btn {
+    /* background: #1b5dd9; */
+    border-bottom: 3px solid rgb(9, 72, 109);
+    /* border: 0px; */
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    /* border: none; */
+}
+.checkout-btn{
+    border: none;
+
+}
