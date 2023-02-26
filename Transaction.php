@@ -12,7 +12,7 @@ if (!isset($_SESSION['ID'])) {
 <div class="content">
     <div class="home_title">
         <h1>Transactions</h1>
-        <input type="text" id="fillter_costumer" placeholder="Search...." autocomplete="off">
+        <!-- <input type="text" id="fillter_costumer" placeholder="Search...." autocomplete="off"> -->
     </div>
     <div class="home_table">
         <div class="table">

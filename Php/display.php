@@ -278,8 +278,6 @@ function display_records()
             }
 }
 
-
-
 if(isset ($_POST ['search'])){
     global $db;
 
@@ -312,7 +310,42 @@ if(isset ($_POST ['search'])){
             }   
             echo json_encode($json);   
         }
-
- 
-       
 }
+
+// COUNT TOTAL GUEST
+    function display_availablerooms(){
+  
+        global $db;
+        $query = "SELECT count(id) as rooms FROM rooms WHERE Stats = 'Available'";
+        $count_id = mysqli_query($db,$query);
+        $values = mysqli_fetch_assoc($count_id);
+            $total = $values['rooms'];
+            echo $total;  
+    }
+    function display_allguest(){
+  
+        global $db;
+        $query = "SELECT count(id) as trans FROM trans ";
+        $count_id = mysqli_query($db,$query);
+        $values = mysqli_fetch_assoc($count_id);
+            $total = $values['trans'];
+            echo $total;      
+    }
+    function display_Statsguest(){
+  
+        global $db;
+        $query = "SELECT count(id) as stats FROM trans WHERE Stats = 'Occupied' ";
+        $count_id = mysqli_query($db,$query);
+        $values = mysqli_fetch_assoc($count_id);
+            $total = $values['stats'];
+            echo $total;      
+    }
+    function display_Occupiedroom(){
+  
+        global $db;
+        $query = "SELECT count(id) as stats_room FROM rooms WHERE Stats = 'Occupied'";
+        $count_id = mysqli_query($db,$query);
+        $values = mysqli_fetch_assoc($count_id);
+            $total = $values['stats_room'];
+            echo $total;  
+    }

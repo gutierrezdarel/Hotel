@@ -10,7 +10,7 @@ if (!isset($_SESSION['ID'])) {
 ?>
 <div class="content">
     <div class="home_title">
-        <h1>Home Page</h1>
+        <h1>Records</h1>
     </div>
     <div class="home_table">
         <div class="table">
