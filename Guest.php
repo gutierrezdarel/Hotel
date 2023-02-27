@@ -9,17 +9,9 @@ if (!isset($_SESSION['ID'])) {
 ?>
 <div class="content">
     <!-- <div class="home_container"> -->
-    <div class="home_title">
+    <div class="home_title"> 
+        <h1>Bookings</h1>
         
-        <h1>Guest</h1>
-        <div class="button_container">
-            <div id="checkin-btn" class="button_wrapper" >
-            <button class="checkin-btn"> Checkin </button>
-            </div>
-            <div id="checkout-btn" class="button_wrapper" >
-            <button class="checkout-btn"> Checkout </button>
-            </div>
-        </div>
 
     </div>
     <div  class="home_table">
@@ -27,7 +19,6 @@ if (!isset($_SESSION['ID'])) {
             <table>
                 <thead>
                     <tr>
-
                         <th>Room Number</th>
                         <th>Name</th>
                         <th>Guest</th>
@@ -36,8 +27,6 @@ if (!isset($_SESSION['ID'])) {
                         <th>Status</th>
                         <th>Edit</th>
                         <th>Checkout</th>
-
-
                     </tr>
                 </thead>
 
@@ -49,28 +38,6 @@ if (!isset($_SESSION['ID'])) {
             </table>
         </div>
 
-
-        <div id="checkout-table" class="table">
-            <table>
-                <thead>
-                    <tr>
-
-                        <th>Room Number</th>
-                        <th>Name</th>
-                        <th>Guest</th>
-                        <th>Date/Time Checkin</th>
-                        <th>Date/Time Checkout</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <?php
-                    display_checkout();
-                    ?>
-                </tbody>
-            </table>
-        </div>
     </div>
     <div id="update_costumer-modal" class="modal_overlay">
         <div class="modal_container-add">
@@ -132,19 +99,7 @@ if (!isset($_SESSION['ID'])) {
 <script src="js/ajax.js"></script>
 
 <script>
-    $("#checkin-btn").on("click", function(){
-        $("#checkin-table").addClass("show")
-        $("#checkout-table").removeClass("show")
-        $(".checkin-btn").css("border-bottom", "3px solid rgb(9, 72, 109)")
-        $(".checkout-btn").css("border-bottom", "0")
-    })
-
-    $("#checkout-btn").on("click", function(){
-        $("#checkin-table").removeClass("show")
-        $("#checkout-table").addClass("show")
-        $(".checkout-btn").css("border-bottom", "3px solid rgb(9, 72, 109)")
-        $(".checkin-btn").css("border-bottom", "0")
-    })
+ 
 
 
 </script>

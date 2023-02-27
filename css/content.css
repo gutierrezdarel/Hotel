@@ -207,6 +207,15 @@ td {
     border-bottom: 2px solid rgb(9, 72, 109)
 
 }
+#fillter_today{
+    width: 15em;
+    height: 2rem;
+    border: 0px;
+    background: transparent;
+    border-bottom: 2px solid rgb(9, 72, 109)
+
+}
+
 .button_container{
     display: flex;
     justify-content: center;
@@ -228,13 +237,13 @@ td {
     display: flex;
 }
 
-#checkin-table {
+/* #checkin-table {
     display: none;
 }
 
 #checkin-table.show{
     display: flex;
-}
+} */
 
 .checkin-btn {
     /* background: #1b5dd9; */
@@ -244,9 +253,11 @@ td {
     border-left: 0;
     border-right: 0;
     /* border: none; */
+    background-color: transparent;
 }
 .checkout-btn{
     border: none;
+    background-color: transparent;
 }
 .conetent_container{
     width: 100%;
@@ -255,7 +266,7 @@ td {
 }
 .card-content_container{
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     /* display: flex;
     flex-direction: row;
     gap: 2rem;
@@ -289,4 +300,39 @@ td {
 .text_wrapper h3{
     font-family: 'Teko', sans-serif;
     font-size: 2rem;
+}
+.table_wrapper{
+    width: 100%;
+    padding-top: 6rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow: auto;
+}
+.dashboard_table{
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+    height: 17rem;
+}
+.dashboard_table table{
+    max-width: 70rem;
+    width: 100%;
+    border: 1px solid #0c7db1;
+    border-collapse: collapse;
+    text-align: center;
+
+}
+.filter_wrapper{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 70px;
+    align-items: center;
+    justify-content: space-around;
+   
+}
+.filter_wrapper h1{
+    color: rgb(5, 68, 104);
+    font-family: 'Roboto Serif', serif;
 }

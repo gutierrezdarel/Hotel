@@ -349,3 +349,78 @@ if(isset ($_POST ['search'])){
             $total = $values['stats_room'];
             echo $total;  
     }
+
+    function display_today(){
+        global $db;
+
+        $sql_select = "SELECT a.Costumer_name,
+        a.Contact,
+        a.Home_add,
+        b.checkin, 
+        b.Guest,
+        d.RoomNumber,
+        e.RoomType
+        FROM users as a
+        RIGHT JOIN trans as b
+        ON a.id = b.users_id
+        RIGHT JOIN usertrans as c
+        ON b.id = c.trans_id
+        LEFT JOIN rooms as d
+        ON c.room_id = d.id
+        LEFT JOIN rtype as e
+        ON d.roomtype_id = e.id WHERE date(b.checkin) = date(now())";
+        $query_select = mysqli_query($db ,$sql_select);
+            if($query_select){
+                foreach($query_select as $today){
+                    echo '<tr class="search">';
+                    echo '<td>' . $today['Costumer_name'] . ' </td>';
+                    echo '<td>' . $today['RoomNumber'] . ' </td>';
+                    echo '<td>' . $today['Home_add'] . ' </td>';
+                    echo '<td>' . $today['Contact'] . ' </td>';
+                    echo '<td>' . $today['Guest'] . ' </td>';
+                    echo '<td>' . $today['RoomType'] . ' </td>';
+                    echo '</tr>';
+                }
+            }
+    }
+
+    function display_paid()
+{
+    global $db;
+    $query = "SELECT a.Costumer_name,
+    b.Guest,
+    b.Amount,
+    b.Payments,
+    b.Balance,
+    b.id,
+    d.roomNumber,
+    e.RoomType,
+    e.RoomPrice,
+    e.Package
+    FROM users as a
+    RIGHT JOIN trans as b
+    ON a.id = b.users_id
+    RIGHT JOIN usertrans as c
+    ON b.id = c.trans_id
+    LEFT JOIN rooms as d
+    ON c.room_id = d.id
+    LEFT JOIN rtype as e
+    ON d.roomtype_id = e.id WHERE b.Balance = 0 ORDER BY b.id ASC";
+    $result = mysqli_query($db, $query);
+
+    if ($result) {
+        foreach ($result as $row) {
+            echo '<tr class="search">';
+            echo '<td>' . $row['Costumer_name'] . ' </td>';
+            echo '<td>' . $row['roomNumber'] . ' </td>';
+            echo '<td>' . $row['RoomType'] . ' </td>';
+            echo '<td>' . $row['Package'] . ' </td>';
+            echo '<td>' . $row['Guest'] . ' </td>';
+            echo '<td>' . $row['RoomPrice'] . ' </td>';
+            echo '<td>' . $row['Amount'] . ' </td>';
+            echo '<td>' . $row['Payments'] . ' </td>';
+            echo '<td>' . $row['Balance'] . ' </td>';
+            echo '</tr>';
+        }
+    }
+}

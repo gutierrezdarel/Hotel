@@ -57,4 +57,3 @@ var required = document.querySelectorAll('.validation')
         }
     })
 
-   

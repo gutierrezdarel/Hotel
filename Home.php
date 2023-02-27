@@ -63,7 +63,7 @@ if (!isset($_SESSION['ID'])) {
                     <div class="text_wrapper">
                         <p>Available Rooms </p>
                         <h3><?php 
-                        display_Occupiedroom();
+                       display_availablerooms();
                         ?></h3>
                     </div>
 
@@ -77,18 +77,42 @@ if (!isset($_SESSION['ID'])) {
                     </path> </g></svg></span>
                     <div class="text_wrapper">
                         <p>Occupied Rooms</p>
-                        <h3><?php 
-                        display_availablerooms();
+                        <h3><?php   
+                        display_Occupiedroom();
                          ?></h3>
                     </div>
 
                 </div>
             </div>
         </div>
-
         <div class="add_button" id="add_costumer_modal">
             <button><i class="fa-solid fa-plus"></i></button>
         </div>
+        <div class="table_wrapper">
+            <div class="filter_wrapper">
+                <h1>Today</h1>
+                <input type="text" id="fillter_today" placeholder="Search...." autocomplete="off">
+            </div>
+            <div class="dashboard_table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Room Number</th>
+                        <th>Address</th>
+                        <th>Contact</th>
+                        <th>Guest</th>
+                        <th>Room Type</th>
+                    </tr>
+                </thead>
+             
+                <tbody>
+                <?php
+               display_today();
+                ?>
+                </tbody>
+            </table>
+            </div>
     </div>
 
 

@@ -12,10 +12,17 @@ if (!isset($_SESSION['ID'])) {
 <div class="content">
     <div class="home_title">
         <h1>Transactions</h1>
-        <!-- <input type="text" id="fillter_costumer" placeholder="Search...." autocomplete="off"> -->
+        <div class="button_container">
+            <div id="btn-unpaid" class="button_wrapper">
+                <button class="checkin-btn">Un settled </button>
+            </div>
+            <div id="btn-paid" class="button_wrapper">
+                <button class="checkout-btn"> Settled</button>
+            </div>
+        </div>
     </div>
     <div class="home_table">
-        <div class="table">
+        <div class="table" id= "unpaid_guest">
             <table>
                 <thead>
                     <tr>
@@ -38,6 +45,33 @@ if (!isset($_SESSION['ID'])) {
                 <tbody>
                     <?php
                     display_transaction();
+                    ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="table" id="paid_guest">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Room Number</th>
+                        <th>Room type</th>
+                        <th>Room Package</th>
+                        <th>Guest</th>
+                        <th>Room Price</th>
+                        <th>Total Amount </th>
+                        <th>Down payment</th>
+                        <th>Balance</th>
+
+                    </tr>
+                    <div class="err">
+                        <p class="mes"> </p>
+                    </div>
+                </thead>
+
+                <tbody>
+                    <?php
+                    display_paid();
                     ?>
                 </tbody>
             </table>
@@ -85,3 +119,23 @@ if (!isset($_SESSION['ID'])) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js" integrity="sha256-AdQN98MVZs44Eq2yTwtoKufhnU+uZ7v2kXnD5vqzZVo=" crossorigin="anonymous"></script>
 <script src="js/modals.js"></script>
 <script src="js/ajax.js"></script>
+
+<script>
+    $("#btn-unpaid").on("click", function(){
+        $('#unpaid_guest').css('display','flex');
+        $('#paid_guest').css('display', 'none');
+        // $("#unpaid_guest").addClass("show")
+        // $("#paid_guest").removeClass("show")
+        $(".checkin-btn").css("border-bottom", "3px solid rgb(9, 72, 109)")
+        $(".checkout-btn").css("border-bottom", "0")
+        // alert('hey');
+    })
+
+    $("#btn-paid").on("click", function(){
+        $("#unpaid_guest").css('display','none');
+        $("#paid_guest").css('display','flex');
+        $(".checkout-btn").css("border-bottom", "3px solid rgb(9, 72, 109)")
+        $(".checkin-btn").css("border-bottom", "0")
+    })
+
+</script>

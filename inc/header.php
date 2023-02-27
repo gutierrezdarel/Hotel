@@ -49,7 +49,7 @@
                 <li>
                     <a href="./Guest.php" class=" ">
                         <span class="icon"><i class="fa-solid fa-person"></i></span>
-                        <span class="items">Guest</span>
+                        <span class="items">Bookings</span>
                     </a>
                 </li>
                 <li>
