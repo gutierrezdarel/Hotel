@@ -66,8 +66,8 @@ if (!isset($_SESSION['ID'])) {
                        display_availablerooms();
                         ?></h3>
                     </div>
-
                 </div>
+                
                 <div class="card_wrapper">
                     <span><svg fill="rgb(9, 72, 109)" width="38px" height="38px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>

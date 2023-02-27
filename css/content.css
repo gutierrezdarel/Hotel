@@ -198,7 +198,7 @@ td {
     padding-top: 20px;
     height: 100%;
 }
-#fillter_costumer{
+#fillter_record{
     
     width: 15em;
     height: 2rem;
@@ -237,14 +237,6 @@ td {
     display: flex;
 }
 
-/* #checkin-table {
-    display: none;
-}
-
-#checkin-table.show{
-    display: flex;
-} */
-
 .checkin-btn {
     /* background: #1b5dd9; */
     border-bottom: 3px solid rgb(9, 72, 109);
@@ -262,6 +254,7 @@ td {
 .conetent_container{
     width: 100%;
     height: 100%;
+    overflow-x: auto;
 
 }
 .card-content_container{
@@ -313,15 +306,15 @@ td {
     display: flex;
     justify-content: center;
     overflow: auto;
-    height: 17rem;
-}
-.dashboard_table table{
+    height: 100%;
     max-width: 70rem;
     width: 100%;
-    border: 1px solid #0c7db1;
-    border-collapse: collapse;
-    text-align: center;
-
+    max-height: 17rem;
+}
+.dashboard_table table ,th td {
+border-collapse: collapse;
+border: 1px solid #0c7db1;  
+text-align: center;
 }
 .filter_wrapper{
     display: flex;

@@ -481,10 +481,10 @@
             }
 
 
-        $('#fillter_costumer').on('keyup',function(){
+        $('#fillter_record').on('keyup',function(){
             $('tbody').empty()
             var search = $(this).val();
-
+            
             if(search != ""){
                     $.ajax({
                         url:"Php/display.php",
@@ -495,16 +495,15 @@
                             var cos = JSON.parse(response);
                             cos.forEach(all =>{
                                 $('tbody').append('<tr>'+ 
-                                                '<td>'+all.Costumer_name +'</td>'+ 
                                                 '<td>'+all.roomNumber +'</td>'+ 
+                                                '<td>'+all.Costumer_name +'</td>'+ 
                                                 '<td>'+all.RoomType+'</td>'+ 
-                                                '<td>'+all.Package +'</td>'+ 
-                                                '<td>'+all.Guest +'</td>'+ 
-                                                '<td>'+all.RoomPrice +'</td>'+ 
-                                                '<td>'+all.Amount +'</td>'+ 
+                                                '<td>'+all.Contact +'</td>'+ 
+                                                '<td>'+all.Home_add +'</td>'+ 
+                                                '<td>'+all.Guest +'</td>'+
+                                                '<td>'+all.checkin +'</td>'+ 
+                                                '<td>'+all.checkout +'</td>'+ 
                                                 '<td>'+all.Payments +'</td>'+ 
-                                                '<td>'+all.Balance +'</td>'+ 
-                                                '<td>'+'<button type="button" class="edit_icon" onclick = "Editpayment('+all.id+')"><i class="fa-regular fa-pen-to-square"></i></button>'+'</td>'+
                                                 '</tr>')
                             })
                         

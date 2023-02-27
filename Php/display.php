@@ -99,21 +99,29 @@ function display_costumer()
 
     if ($query_costumer) {
         foreach ($query_costumer as $row) {
-            echo '<tr>';
-            echo '<td> ' . $row['roomNumber'] . '</td>';
-            echo '<td> ' . $row['Costumer_name'] . '</td>';
-            echo '<td> ' . $row['Guest'] . '</td>';
-            echo '<td>  ' . $row['checkin'] . '</td>';
-            echo '<td id="checkout-' . $row['id'] . '"> ' . $row['checkout'] . '</td>';
-            echo '<td id="stats-' . $row['id'] . '">' . $row['Stats'] . ' </td>';
-            echo '<input type="hidden" id="amount-' . $row['id'] . '"  value = "' . $row['Amount'] . '">';
-            echo '<input type="hidden" id="payment-' . $row['id'] . '"  value = "' . $row['Payments'] . '">';
-            echo '<input type="hidden" id="balance-' . $row['id'] . '"  value = "' . $row['Balance'] . '">';
-            echo '<input type="hidden" id="price-' . $row['id'] . '"  value = "' . $row['RoomPrice'] . '">';
-            echo '<input type="hidden" id="roomnumber-' . $row['id'] . '" value = "' . $row['roomid'] . '">';
-            echo '<td><button type="button" class="edit_icon" onclick = "Editcheckin(' . $row['id'] . ')"><i class="fa-regular fa-pen-to-square"></i></button></td>';
-            echo '<td><button type="button" class="delete_icon" onclick = "Checkoutguest(' . $row['id'] . ')"><i class="fa-solid fa-x"></i></button></td>';
-            echo '</tr>';
+            if (date("Y-m-d H:M") < $row['checkout']) {
+                echo '<tr>';
+                echo '<td> ' . $row['roomNumber'] . '</td>';
+                echo '<td> ' . $row['Costumer_name'] . '</td>';
+                echo '<td> ' . $row['Guest'] . '</td>';
+                echo '<td>  ' . $row['checkin'] . '</td>';
+                echo '<td id="checkout-' . $row['id'] . '"> ' . $row['checkout'] . '</td>';
+                echo '<td id="stats-' . $row['id'] . '">' . $row['Stats'] . ' </td>';
+                echo '<input type="hidden" id="amount-' . $row['id'] . '"  value = "' . $row['Amount'] . '">';
+                echo '<input type="hidden" id="payment-' . $row['id'] . '"  value = "' . $row['Payments'] . '">';
+                echo '<input type="hidden" id="balance-' . $row['id'] . '"  value = "' . $row['Balance'] . '">';
+                echo '<input type="hidden" id="price-' . $row['id'] . '"  value = "' . $row['RoomPrice'] . '">';
+                echo '<input type="hidden" id="roomnumber-' . $row['id'] . '" value = "' . $row['roomid'] . '">';
+                echo '<td><button type="button" class="edit_icon" onclick = "Editcheckin(' . $row['id'] . ')"><i class="fa-regular fa-pen-to-square"></i></button></td>';
+                echo '<td><button type="button" class="delete_icon" onclick = "Checkoutguest(' . $row['id'] . ')"><i class="fa-solid fa-x"></i></button></td>';
+                echo '</tr>';
+            }else{
+                $sql_update = "UPDATE trans SET Stats = 'Un Occupied' WHERE id = ".$row['id']."";
+                mysqli_query($db, $sql_update);
+
+                $query_update = "UPDATE rooms SET Stats= 'Available' WHERE id = " . $row['id'] . "";
+                mysqli_query($db, $query_update);
+            }
         }
     }
 }
@@ -249,6 +257,7 @@ function display_records()
         b.checkin,
         b.checkout,
         b.Payments,
+        b.Stats,
         d.RoomNumber,
         e.RoomType
         FROM users AS a
@@ -259,39 +268,40 @@ function display_records()
         LEFT JOIN rooms AS d
         ON c.room_id =  d.id
         LEFT JOIN rtype AS e
-        ON d.roomtype_id = e.id ";
-        $query_select = mysqli_query($db, $sql_select);
-            if($query_select){
-                foreach($query_select as $row){
-                    echo '<tr class="search">';
-                    echo '<td>' . $row['RoomNumber'] . ' </td>';
-                    echo '<td>' . $row['RoomType'] . ' </td>';
-                    echo '<td>' . $row['Costumer_name'] . ' </td>';
-                    echo '<td>' . $row['Contact'] . ' </td>';
-                    echo '<td>' . $row['Home_add'] . ' </td>';
-                    echo '<td>' . $row['Guest'] . ' </td>';
-                    echo '<td>' . $row['checkin'] . ' </td>';
-                    echo '<td>' . $row['checkout'] . ' </td>';
-                    echo '<td>' . $row['Payments'] . ' </td>';
-                    echo '</tr>';
-                }
-            }
+        ON d.roomtype_id = e.id WHERE b.Stats = 'Un Occupied'";
+    $query_select = mysqli_query($db, $sql_select);
+    if ($query_select) {
+        foreach ($query_select as $row) {
+            echo '<tr class="search">';
+            echo '<td>' . $row['RoomNumber'] . ' </td>';
+            echo '<td>' . $row['Costumer_name'] . ' </td>';
+            echo '<td>' . $row['RoomType'] . ' </td>';
+            echo '<td>' . $row['Contact'] . ' </td>';
+            echo '<td>' . $row['Home_add'] . ' </td>';
+            echo '<td>' . $row['Guest'] . ' </td>';
+            echo '<td>' . $row['checkin'] . ' </td>';
+            echo '<td>' . $row['checkout'] . ' </td>';
+            echo '<td>' . $row['Payments'] . ' </td>';
+            echo '</tr>';
+        }
+    }
 }
 
-if(isset ($_POST ['search'])){
+if (isset($_POST['search'])) {
     global $db;
 
     $search = $_POST['search'];
 
     $json = array();
-        $query = "SELECT a.Costumer_name,
+    $query = "SELECT a.Costumer_name,
+        a.Contact,
+        a.Home_add,
         b.Guest,
-        b.Amount,
+        b.checkin,
+        b.checkout,
         b.Payments,
-        b.Balance,
         d.roomNumber,
         e.RoomType,
-        e.RoomPrice,
         e.Package
         FROM users as a
         RIGHT JOIN trans as b
@@ -301,59 +311,64 @@ if(isset ($_POST ['search'])){
         LEFT JOIN rooms as d
         ON c.room_id = d.id
         LEFT JOIN rtype as e
-        ON d.roomtype_id = e.id WHERE a.costumer_name LIKE '{$search}%' LIMIT 5";
-        $search_costumer = mysqli_query($db,$query);
-    
-        if(mysqli_num_rows($search_costumer) > 0){
-            foreach($search_costumer as $costumers){
-                array_push($json, $costumers);
-            }   
-            echo json_encode($json);   
+        ON d.roomtype_id = e.id WHERE b.Stats = 'Un Occupied' AND  a.costumer_name LIKE '{$search}%' LIMIT 5";
+    $search_costumer = mysqli_query($db, $query);
+
+    if (mysqli_num_rows($search_costumer) > 0) {
+        foreach ($search_costumer as $costumers) {
+            array_push($json, $costumers);
         }
+        echo json_encode($json);
+    }
 }
 
 // COUNT TOTAL GUEST
-    function display_availablerooms(){
-  
-        global $db;
-        $query = "SELECT count(id) as rooms FROM rooms WHERE Stats = 'Available'";
-        $count_id = mysqli_query($db,$query);
-        $values = mysqli_fetch_assoc($count_id);
-            $total = $values['rooms'];
-            echo $total;  
-    }
-    function display_allguest(){
-  
-        global $db;
-        $query = "SELECT count(id) as trans FROM trans ";
-        $count_id = mysqli_query($db,$query);
-        $values = mysqli_fetch_assoc($count_id);
-            $total = $values['trans'];
-            echo $total;      
-    }
-    function display_Statsguest(){
-  
-        global $db;
-        $query = "SELECT count(id) as stats FROM trans WHERE Stats = 'Occupied' ";
-        $count_id = mysqli_query($db,$query);
-        $values = mysqli_fetch_assoc($count_id);
-            $total = $values['stats'];
-            echo $total;      
-    }
-    function display_Occupiedroom(){
-  
-        global $db;
-        $query = "SELECT count(id) as stats_room FROM rooms WHERE Stats = 'Occupied'";
-        $count_id = mysqli_query($db,$query);
-        $values = mysqli_fetch_assoc($count_id);
-            $total = $values['stats_room'];
-            echo $total;  
-    }
+function display_availablerooms()
+{
 
-    function display_today(){
-        global $db;
+    global $db;
+    $query = "SELECT count(id) as rooms FROM rooms WHERE Stats = 'Available'";
+    $count_id = mysqli_query($db, $query);
+    $values = mysqli_fetch_assoc($count_id);
+    $total = $values['rooms'];
+    echo $total;
+}
+function display_allguest()
+{
 
-        $sql_select = "SELECT a.Costumer_name,
+    global $db;
+    $query = "SELECT count(id) as trans FROM trans ";
+    $count_id = mysqli_query($db, $query);
+    $values = mysqli_fetch_assoc($count_id);
+    $total = $values['trans'];
+    echo $total;
+}
+function display_Statsguest()
+{
+
+    global $db;
+    $query = "SELECT count(id) as stats FROM trans WHERE Stats = 'Occupied' ";
+    $count_id = mysqli_query($db, $query);
+    $values = mysqli_fetch_assoc($count_id);
+    $total = $values['stats'];
+    echo $total;
+}
+function display_Occupiedroom()
+{
+
+    global $db;
+    $query = "SELECT count(id) as stats_room FROM rooms WHERE Stats = 'Occupied'";
+    $count_id = mysqli_query($db, $query);
+    $values = mysqli_fetch_assoc($count_id);
+    $total = $values['stats_room'];
+    echo $total;
+}
+
+function display_today()
+{
+    global $db;
+
+    $sql_select = "SELECT a.Costumer_name,
         a.Contact,
         a.Home_add,
         b.checkin, 
@@ -369,22 +384,22 @@ if(isset ($_POST ['search'])){
         ON c.room_id = d.id
         LEFT JOIN rtype as e
         ON d.roomtype_id = e.id WHERE date(b.checkin) = date(now())";
-        $query_select = mysqli_query($db ,$sql_select);
-            if($query_select){
-                foreach($query_select as $today){
-                    echo '<tr class="search">';
-                    echo '<td>' . $today['Costumer_name'] . ' </td>';
-                    echo '<td>' . $today['RoomNumber'] . ' </td>';
-                    echo '<td>' . $today['Home_add'] . ' </td>';
-                    echo '<td>' . $today['Contact'] . ' </td>';
-                    echo '<td>' . $today['Guest'] . ' </td>';
-                    echo '<td>' . $today['RoomType'] . ' </td>';
-                    echo '</tr>';
-                }
-            }
+    $query_select = mysqli_query($db, $sql_select);
+    if ($query_select) {
+        foreach ($query_select as $today) {
+            echo '<tr class="search">';
+            echo '<td>' . $today['Costumer_name'] . ' </td>';
+            echo '<td>' . $today['RoomNumber'] . ' </td>';
+            echo '<td>' . $today['Home_add'] . ' </td>';
+            echo '<td>' . $today['Contact'] . ' </td>';
+            echo '<td>' . $today['Guest'] . ' </td>';
+            echo '<td>' . $today['RoomType'] . ' </td>';
+            echo '</tr>';
+        }
     }
+}
 
-    function display_paid()
+function display_paid()
 {
     global $db;
     $query = "SELECT a.Costumer_name,
@@ -393,6 +408,7 @@ if(isset ($_POST ['search'])){
     b.Payments,
     b.Balance,
     b.id,
+    b.Stats,
     d.roomNumber,
     e.RoomType,
     e.RoomPrice,
@@ -405,7 +421,7 @@ if(isset ($_POST ['search'])){
     LEFT JOIN rooms as d
     ON c.room_id = d.id
     LEFT JOIN rtype as e
-    ON d.roomtype_id = e.id WHERE b.Balance = 0 ORDER BY b.id ASC";
+    ON d.roomtype_id = e.id WHERE b.Balance = 0 AND b.Stats = 'Occupied' ORDER BY b.id ASC";
     $result = mysqli_query($db, $query);
 
     if ($result) {
