@@ -49,12 +49,18 @@
     display: inline-block;
 }
 
-.sidebar ul li a :hover,
-.sidebar ul li a .nav-link {
+.sidebar li  :hover{
     color: #0c7db1;
     background: white;
     border-right: 2px solid rgb(5, 68, 104);
+
 }
+
+/* .sidebar  li :hover {
+    color: #0c7db1;
+    background: white;
+    border-right: 2px solid rgb(5, 68, 104);
+} */
 
 .header {
     width: 100%;
@@ -207,7 +213,7 @@ td {
     border-bottom: 2px solid rgb(9, 72, 109)
 
 }
-#fillter_today{
+#filter_today{
     width: 15em;
     height: 2rem;
     border: 0px;

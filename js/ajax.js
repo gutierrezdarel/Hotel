@@ -506,13 +506,12 @@
                                                 '<td>'+all.Payments +'</td>'+ 
                                                 '</tr>')
                             })
-                        
                         }
-                        
                     })    
                 }else{
                     location.reload()   
                 } 
         })  
 
+      
 

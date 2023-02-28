@@ -91,7 +91,7 @@ if (!isset($_SESSION['ID'])) {
         <div class="table_wrapper">
             <div class="filter_wrapper">
                 <h1>Today</h1>
-                <input type="text" id="fillter_today" placeholder="Search...." autocomplete="off">
+                <input type="text" id="filter_today" placeholder="Search...." autocomplete="off">
             </div>
             <div class="dashboard_table">
             <table>

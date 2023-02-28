@@ -22,7 +22,10 @@
                 </div>
                 <div class="header_logout">
                 <h1>Admin</h1>
-                <button>Logout</button>
+                <a href="logout.php"> 
+                      <button>Logout</button>
+                </a>
+               
                 </div>
             </div>
 

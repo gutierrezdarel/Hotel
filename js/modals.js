@@ -57,3 +57,32 @@ var required = document.querySelectorAll('.validation')
         }
     })
 
+    $('#filter_today').on('keyup', function(){
+        $('tbody').empty()
+        var filter = $(this).val();
+        
+
+        if(filter != ""){
+            $.ajax({
+                url:"Php/display.php",
+                type: "POST",
+                data: {filter:filter},
+                success:function(response){
+                  var res = JSON.parse(response)
+                  res.forEach(today =>{
+                    $('tbody').append('<tr>'+ 
+                                    
+                                    '<td>'+today.Costumer_name +'</td>'+ 
+                                    '<td>'+today.roomNumber +'</td>'+ 
+                                    '<td>'+today.Home_add +'</td>'+ 
+                                    '<td>'+today.Contact +'</td>'+ 
+                                    '<td>'+today.Guest +'</td>'+
+                                    '<td>'+today.RoomType+'</td>'+ 
+                                    '</tr>')
+                })
+                }
+            })
+        }else{
+            location.reload()   
+        }
+    })

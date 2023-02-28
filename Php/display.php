@@ -287,6 +287,7 @@ function display_records()
     }
 }
 
+// FILTER ALL RECORDS
 if (isset($_POST['search'])) {
     global $db;
 
@@ -364,6 +365,7 @@ function display_Occupiedroom()
     echo $total;
 }
 
+// DISPLAY TODAY CHECKIN
 function display_today()
 {
     global $db;
@@ -383,8 +385,8 @@ function display_today()
         LEFT JOIN rooms as d
         ON c.room_id = d.id
         LEFT JOIN rtype as e
-        ON d.roomtype_id = e.id WHERE date(b.checkin) = date(now())";
-    $query_select = mysqli_query($db, $sql_select);
+        ON d.roomtype_id = e.id WHERE date(b.checkin) = date(now()) ";
+             $query_select = mysqli_query($db, $sql_select);
     if ($query_select) {
         foreach ($query_select as $today) {
             echo '<tr class="search">';
@@ -399,6 +401,47 @@ function display_today()
     }
 }
 
+// FILTER TODAY CHECKIN
+
+ 
+
+    if(isset($_POST['filter'])){
+        global $db;
+
+        $filter = $_POST['filter'];
+
+        $json2 = array();
+
+        $sql_select = "SELECT a.Costumer_name,
+        a.Contact,
+        a.Home_add,
+        b.checkin, 
+        b.Guest,
+        d.RoomNumber,
+        e.RoomType
+        FROM users as a
+        RIGHT JOIN trans as b
+        ON a.id = b.users_id
+        RIGHT JOIN usertrans as c
+        ON b.id = c.trans_id
+        LEFT JOIN rooms as d
+        ON c.room_id = d.id
+        LEFT JOIN rtype as e
+        ON d.roomtype_id = e.id WHERE a.Costumer_name LIKE '{$filter}%' AND date(b.checkin) = date(now())  ";
+    $query_filter = mysqli_query($db, $sql_select);
+
+    if (mysqli_num_rows($query_filter) > 0) {
+        foreach ($query_filter as $today) {
+            array_push($json2, $today);
+        }
+        echo json_encode($json2);
+    }else{
+        echo 'no records';
+    }
+    }
+
+
+// DISPLAY PAID COSTUMER
 function display_paid()
 {
     global $db;
